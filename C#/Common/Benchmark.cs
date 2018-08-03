@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 
 #if !JSIL
 using System.Threading;
+using System.Threading.Tasks;
 #endif
 
 #if BIT64
@@ -424,7 +425,7 @@ namespace RayTraceBenchmark
 		#if JSIL
 		public static byte[] Start()
 		#else
-		public static void Start()
+		public static async Task Start()
 		#endif
 		{
 			// create objects
@@ -447,9 +448,10 @@ namespace RayTraceBenchmark
 			#if !JSIL
 			GC.Collect();
 			Console.WriteLine("Give the system a little time...");
-			Thread.Sleep(2000);
+			await Task.Delay(2000);
 			#endif
 			Console.WriteLine("Starting test...");
+			await Task.Yield();
 
 			// run test
 			#if WIN32

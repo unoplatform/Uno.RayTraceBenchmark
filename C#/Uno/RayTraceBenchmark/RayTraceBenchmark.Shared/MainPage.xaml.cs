@@ -28,12 +28,11 @@ namespace RayTraceBenchmark
 			this.InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
 			RayTraceBenchmark.Console.WriteLineCallback = print;
 			BenchmarkMain.SaveImageCallback = showImage;
-			secText.Text = "Working...";
-			BenchmarkMain.Start();
+			await BenchmarkMain.Start();
 		}
 
 		private void print(string value)
