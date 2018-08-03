@@ -32,6 +32,7 @@ namespace RayTraceBenchmark
 		{
 			RayTraceBenchmark.Console.WriteLineCallback = print;
 			BenchmarkMain.SaveImageCallback = showImage;
+			secText.Text = "Working...";
 			BenchmarkMain.Start();
 		}
 

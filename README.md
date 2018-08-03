@@ -1,3 +1,11 @@
+RayTraceBenchmark for Uno Platform
+=================
+
+This port makes the [Raytracer Benchmark](https://github.com/zezba9000/RayTraceBenchmark) app run on iOS, Android and WebAssembly, using [the Uno Platform](http://platform.uno).
+
+Try the WebAssembly build live at http://raytracerbenchmark-wasm.platform.uno
+
+
 RayTraceBenchmark
 =================
 

@@ -10,7 +10,9 @@ namespace RayTraceBenchmark.Wasm
 
 		static void Main(string[] args)
 		{
+#if DEBUG
 			ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
+#endif
 
 			Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}
