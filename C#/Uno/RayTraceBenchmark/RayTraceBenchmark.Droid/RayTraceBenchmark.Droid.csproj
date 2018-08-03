@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
@@ -38,7 +38,7 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
@@ -55,9 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Uno.UI">
-      <Version>1.28.1-dev.2183</Version>
+      <Version>1.31.0-dev.226</Version>
     </PackageReference>
-  </ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+	</ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

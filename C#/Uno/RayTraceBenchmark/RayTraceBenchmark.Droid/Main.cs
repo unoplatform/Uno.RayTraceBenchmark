@@ -9,6 +9,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Microsoft.Extensions.Logging;
+using Uno.Extensions;
 
 namespace RayTraceBenchmark.Droid
 {
@@ -23,6 +25,38 @@ namespace RayTraceBenchmark.Droid
 		public Application(IntPtr javaReference, JniHandleOwnership transfer)
 			: base(new App(), javaReference, transfer)
 		{
+			ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
+		}
+		static void ConfigureFilters(ILoggerFactory factory)
+		{
+			factory
+				.WithFilter(new FilterLoggerSettings
+					{
+						{ "Uno", LogLevel.Warning },
+						{ "Windows", LogLevel.Warning },
+						{ "SampleControl.Presentation", LogLevel.Debug },
+						{ "Windows.UI.Xaml.Controls.Image", LogLevel.Debug },
+
+						// Generic Xaml events
+						// { "Windows.UI.Xaml", LogLevel.Debug },
+
+						// { "Uno.UI.Controls.AsyncValuePresenter", LogLevel.Debug },
+						// { "Uno.UI.Controls.IfDataContext", LogLevel.Debug },
+						   
+						// Layouter specific messages
+						// { "Windows.UI.Xaml.Controls", LogLevel.Debug },
+						//{ "Windows.UI.Xaml.Controls.Layouter", LogLevel.Debug },
+						//{ "Windows.UI.Xaml.Controls.Panel", LogLevel.Debug },
+						   
+						// Binding related messages
+						// { "Windows.UI.Xaml.Data", LogLevel.Debug },
+						// { "Windows.UI.Xaml.Data", LogLevel.Debug },
+						   
+						//  Binder memory references tracking
+						// { "ReferenceHolder", LogLevel.Debug },
+					}
+				)
+				.AddConsole(LogLevel.Debug);
 		}
 	}
 }
