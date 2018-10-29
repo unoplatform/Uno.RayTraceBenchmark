@@ -26,20 +26,22 @@
 				<xamarin:Run Text="running on" />
 				<wasm:Run Text="WebAssembly" />
 			</TextBlock>
-			<TextBlock FontStyle="Italic"
-					   TextWrapping="Wrap">
-				Note that this app is running the mono interpreted mode
-				(which is about <Hyperlink NavigateUri="https://github.com/stefan-schweiger/dotWasmBenchmark">50x slower
-				than it should be</Hyperlink>), and is for the time being best experienced in Microsoft Edge or Firefox.
-			</TextBlock>
+			<wasm:TextBlock FontStyle="Italic"
+							TextWrapping="Wrap">
+				That this app is running the Mono WebAssembly AOT mode, and is for the time being best experienced in Microsoft Edge or Firefox.
+			</wasm:TextBlock>
 		</StackPanel>
 
 		<Grid Grid.Row="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 			<Image Name="image"
 				   HorizontalAlignment="Left"
-				   Margin="0"
+				   Grid.Row="1"
 				   VerticalAlignment="Top" />
-			<StackPanel>
+			<StackPanel Grid.Row="0">
 				<Button Content="Start Test"
 						HorizontalAlignment="left"
 						Margin="10"
