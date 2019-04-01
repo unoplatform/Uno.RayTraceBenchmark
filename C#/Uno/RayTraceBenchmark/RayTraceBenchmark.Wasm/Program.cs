@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using Uno.Extensions;
+using Uno.Foundation;
 
 namespace RayTraceBenchmark.Wasm
 {
@@ -10,11 +11,13 @@ namespace RayTraceBenchmark.Wasm
 
 		static void Main(string[] args)
 		{
+            WebAssemblyRuntime.InvokeJS("Uno.UI.Demo.Analytics.reportPageView('main');");
+
 #if DEBUG
 			ConfigureFilters(LogExtensionPoint.AmbientLoggerFactory);
 #endif
 
-			Windows.UI.Xaml.Application.Start(_ => _app = new App());
+            Windows.UI.Xaml.Application.Start(_ => _app = new App());
 		}
 		static void ConfigureFilters(ILoggerFactory factory)
 		{
