@@ -3,49 +3,35 @@
 	  xmlns:xamarin="http://uno.ui/xamarin"
 	  xmlns:wasm="http://uno.ui/wasm"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:banner="using:Uno.UI.Sample.Banner"
 	  xmlns:local="using:RayTraceBenchmark"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  mc:Ignorable="d xamarin wasm">
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="auto" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0"
-					Margin="15,15,15,15">
-			<TextBlock FontWeight="Bold"
-					   FontSize="20"
-					   TextWrapping="Wrap">
-				<Run Text="Welcome to the" />
-				<Hyperlink NavigateUri="https://platform.uno">Uno Platform </Hyperlink>
-				<Hyperlink NavigateUri="https://github.com/nventive/Uno.RayTraceBenchmark">Performance Benchmark</Hyperlink>
-				<Run Text="based on" />
-				<Hyperlink NavigateUri="https://github.com/zezba9000/RayTraceBenchmark">RayTraceBenchmark</Hyperlink>
-				<xamarin:Run Text="running on" />
-				<wasm:Run Text="WebAssembly" />
-			</TextBlock>
-			<TextBlock FontStyle="Italic"
-					   TextWrapping="Wrap">
-				Note that this app is running the mono interpreted mode
-				(which is about <Hyperlink NavigateUri="https://github.com/stefan-schweiger/dotWasmBenchmark">50x slower
-				than it should be</Hyperlink>), and is for the time being best experienced in Microsoft Edge or Firefox.
-			</TextBlock>
-		</StackPanel>
+    <banner:BannerControl
+        LinkToUnoPlatformApp="https://github.com/nventive/Uno.RayTraceBenchmark"
+        LinkToOriginalApp="https://github.com/zezba9000/RayTraceBenchmark"
+        AppName="Raytracer Benchmark"
+        AppAuthor="Uno Platform">
 
-		<Grid Grid.Row="1">
-			<Image Name="image"
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Image Name="image"
 				   HorizontalAlignment="Left"
 				   Margin="0"
 				   VerticalAlignment="Top" />
-			<StackPanel>
-				<Button Content="Start Test"
+                <StackPanel>
+                    <Button Content="Start Test"
 						HorizontalAlignment="left"
 						Margin="10"
 						VerticalAlignment="top"
 						Click="Button_Click" />
-				<TextBlock Name="secText"
+                    <TextBlock Name="secText"
 						   FontSize="64"
 						   Foreground="Green"
 						   HorizontalAlignment="Left"
@@ -53,7 +39,8 @@
 						   TextWrapping="Wrap"
 						   Text="Sec: 0"
 						   VerticalAlignment="Top" />
-			</StackPanel>
-		</Grid>
-	</Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </banner:BannerControl>
 </Page>

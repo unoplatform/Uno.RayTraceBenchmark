@@ -30,7 +30,11 @@ namespace RayTraceBenchmark
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			RayTraceBenchmark.Console.WriteLineCallback = print;
+#if __WASM__
+            Uno.Foundation.WebAssemblyRuntime.InvokeJS("Uno.UI.Demo.Analytics.reportPageView('benchmark');");
+#endif
+
+            RayTraceBenchmark.Console.WriteLineCallback = print;
 			BenchmarkMain.SaveImageCallback = showImage;
 			await BenchmarkMain.Start();
 		}
