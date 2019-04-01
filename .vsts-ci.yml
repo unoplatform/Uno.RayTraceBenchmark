@@ -70,7 +70,7 @@ jobs:
 
   - bash: |
       source /emsdk/emsdk_env.sh
-      msbuild /r /p:Configuration=Release $(build.sourcesdirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
+      msbuild /r /p:Configuration=Release "$(build.sourcesdirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
