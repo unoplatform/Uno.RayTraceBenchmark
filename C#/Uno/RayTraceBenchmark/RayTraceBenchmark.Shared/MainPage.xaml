@@ -15,23 +15,23 @@
         AppName="Raytracer Benchmark"
         AppAuthor="Uno Platform">
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="1">
-                <Image Name="image"
+            <Image Name="image"
+                   Grid.Row="1"
 				   HorizontalAlignment="Left"
-				   Margin="0"
+				   Margin="10"
 				   VerticalAlignment="Top" />
-                <StackPanel>
-                    <Button Content="Start Test"
+            <StackPanel Grid.Row="0">
+                <Button Content="Start Test"
 						HorizontalAlignment="left"
 						Margin="10"
 						VerticalAlignment="top"
 						Click="Button_Click" />
-                    <TextBlock Name="secText"
+                <TextBlock Name="secText"
 						   FontSize="64"
 						   Foreground="Green"
 						   HorizontalAlignment="Left"
@@ -39,8 +39,7 @@
 						   TextWrapping="Wrap"
 						   Text="Sec: 0"
 						   VerticalAlignment="Top" />
-                </StackPanel>
-            </Grid>
+            </StackPanel>
         </Grid>
     </banner:BannerControl>
 </Page>
