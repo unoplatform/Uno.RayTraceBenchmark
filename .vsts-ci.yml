@@ -75,7 +75,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(build.sourcesdirectory)/C#/Uno/Uno.RayTraceBenchmark.Wasm/bin/Release/netstandard2.0/dist'
+      SourceFolder: '$(build.sourcesdirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/netstandard2.0/dist'
       Contents: '**/*.*'
       TargetFolder: $(build.artifactstagingdirectory)/wasm
       CleanTargetFolder: false

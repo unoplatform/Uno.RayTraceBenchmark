@@ -6,7 +6,8 @@
 		<WasmHead>true</WasmHead>
 		<DefineConstants>$(DefineConstants);__WASM__;UWP</DefineConstants>
 		<NoWarn>NU1701</NoWarn>
-	</PropertyGroup>
+    <WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsUnixLike())">FullAOT</WasmShellMonoRuntimeExecutionMode>
+  </PropertyGroup>
   
   <ItemGroup>
     <EmbeddedResource Include="RayTraceBenchmark.Wasm.xml">
