@@ -13,7 +13,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Uno.Foundation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -32,7 +31,7 @@ namespace RayTraceBenchmark
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
 #if __WASM__
-            WebAssemblyRuntime.InvokeJS("Uno.UI.Demo.Analytics.reportPageView('benchmark');");
+            Uno.Foundation.WebAssemblyRuntime.InvokeJS("Uno.UI.Demo.Analytics.reportPageView('benchmark');");
 #endif
 
             RayTraceBenchmark.Console.WriteLineCallback = print;
