@@ -1,7 +1,7 @@
 resources:
   containers:
   - container: nv-bionic-wasm
-    image: nventive/wasm-build:1.0-bionic
+    image: nventive/wasm-build:1.2
 
 jobs:
 - job: VS_Latest
@@ -68,9 +68,16 @@ jobs:
 
     displayName: 'Setup Enscripten'
 
-  - bash: |
+  - task: GitVersion@4
+    inputs:
+      updateAssemblyInfo: false
+
+  - script: |
       source /emsdk/emsdk_env.sh
       msbuild /r /p:Configuration=Release "$(build.sourcesdirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
+
+    env:
+      GITVERSION_INFORMATIONALVERSION: $(GITVERSION_INFORMATIONALVERSION)
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
