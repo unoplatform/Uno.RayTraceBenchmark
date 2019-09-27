@@ -44,8 +44,8 @@ namespace Android_Xamarin
 		public partial class Drawable
 		{
 			
-			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			// aapt resource value: 0x7F010000
+			public const int Icon = 2130771968;
 			
 			static Drawable()
 			{
@@ -60,11 +60,11 @@ namespace Android_Xamarin
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050001
-			public const int button1 = 2131034113;
+			// aapt resource value: 0x7F020000
+			public const int button1 = 2130837504;
 			
-			// aapt resource value: 0x7f050000
-			public const int textView1 = 2131034112;
+			// aapt resource value: 0x7F020001
+			public const int textView1 = 2130837505;
 			
 			static Id()
 			{
@@ -79,7 +79,7 @@ namespace Android_Xamarin
 		public partial class Layout
 		{
 			
-			// aapt resource value: 0x7f030000
+			// aapt resource value: 0x7F030000
 			public const int Main = 2130903040;
 			
 			static Layout()
@@ -95,11 +95,11 @@ namespace Android_Xamarin
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int app_name = 2130968577;
+			// aapt resource value: 0x7F040000
+			public const int app_name = 2130968576;
 			
-			// aapt resource value: 0x7f040000
-			public const int hello = 2130968576;
+			// aapt resource value: 0x7F040001
+			public const int hello = 2130968577;
 			
 			static String()
 			{
