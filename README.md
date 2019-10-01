@@ -11,21 +11,15 @@ RayTraceBenchmark
 
 A benchmark for testing the performance of different languages while rendering a ray-traced world.
 
-Code originally ported from: http://forum.dlang.org/thread/yzsqwejxqlnzryhrkfuq@forum.dlang.org#post-yzsqwejxqlnzryhrkfuq:40forum.dlang.org
+Code originally ported from [here](http://forum.dlang.org/thread/yzsqwejxqlnzryhrkfuq@forum.dlang.org#post-yzsqwejxqlnzryhrkfuq:40forum.dlang.org).
 
 
 All benchmarks will produce a RAW image that is equivelent to ReferenceImage.jpg
 
 The RAW image resolution is 1280x720.
 
-C# Results:
+Results:
 ---
-https://github.com/zezba9000/RayTraceBenchmark/blob/master/C%23/Results.md
-
-Cpp Results:
----
-https://github.com/zezba9000/RayTraceBenchmark/blob/master/Cpp/Results.md
-
-Nim Results:
----
-https://github.com/zezba9000/RayTraceBenchmark/blob/master/Nim/Results.md
+* [C#](https://github.com/zezba9000/RayTraceBenchmark/blob/master/C%23/Results.md)
+* [Cpp](https://github.com/zezba9000/RayTraceBenchmark/blob/master/Cpp/Results.md)
+* [Nim](https://github.com/zezba9000/RayTraceBenchmark/blob/master/Nim/Results.md)
