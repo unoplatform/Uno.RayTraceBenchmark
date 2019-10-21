@@ -1,7 +1,7 @@
 resources:
   containers:
   - container: nv-bionic-wasm
-    image: nventive/wasm-build:1.2
+    image: nventive/wasm-build:1.5
 
 jobs:
 - job: VS_Latest
@@ -43,7 +43,7 @@ jobs:
 
   variables:
     NUGET_PACKAGES: $(build.sourcesdirectory)/.nuget
-    EMSCRIPTEN_VERSION: 1.38.45-upstream
+    EMSCRIPTEN_VERSION: 1.38.48-upstream
 
   steps:
   - checkout: self
