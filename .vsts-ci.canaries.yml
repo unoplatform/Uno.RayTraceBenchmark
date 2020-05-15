@@ -1,0 +1,25 @@
+parameters:
+- name: Solution
+  type: string
+  default: ''
+- name: ArtifactName
+  type: string
+  default: ''
+
+steps:
+- task: nventiveCanaryUpdater@5
+  inputs:
+    solution: ${{ parameters['Solution'] }}
+    usePrivateFeed: false
+    useNuGetOrg: true
+    mergeBranch: true
+    branchToMerge: 'master'
+    nugetUpdaterVersion: '2.1.1'
+    allowDowngrade: true
+    packageAuthor: 'nventive'
+    summaryFile: '$(Build.ArtifactStagingDirectory)/Summary.md'
+    resultFile: '$(Build.ArtifactStagingDirectory)/Results.json'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: ${{ parameters['ArtifactName'] }}

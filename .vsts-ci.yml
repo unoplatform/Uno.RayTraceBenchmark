@@ -1,27 +1,31 @@
-resources:
-  containers:
-  - container: nv-bionic-wasm
-    image: nventive/wasm-build:1.5
-
 jobs:
-- job: VS_Latest
+- job: Windows
+  
+  pool:
+    vmImage: windows-2019
+
   variables:
+    Solution: C#\Uno\Uno.RayTraceBenchmark.sln
     NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
-    NUGET_HTTP_CACHE_PATH: $(Agent.WorkFolder)\.nuget-http-cache
-    SourceLinkEnabled: false
 
   steps:
-  - task: GitVersion@3
+  - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries') }}:
+    - template: .vsts-ci.canaries.yml
+      parameters:
+        Solution: $(Solution)
+        ArtifactName: Canaries
+
+  - task: GitVersion@5
     inputs:
       updateAssemblyInfo: false   
 
   - task: MSBuild@1
     inputs:
-      solution: 'C#\Uno\Uno.RayTraceBenchmark.sln'
+      solution: $(Solution)
       msbuildLocationMethod: version
       msbuildVersion: latest
       msbuildArchitecture: x86
-      msbuildArguments: /r /p:Configuration=Release "/p:PackageVersion=%GITVERSION_FullSemVer%" "/p:InformationalVersion=%GITVERSION_InformationalVersion%" /detailedsummary
+      msbuildArguments: /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" /detailedsummary
       clean: false
       maximumCpuCount: true
       restoreNugetPackages: false
@@ -35,68 +39,63 @@ jobs:
       artifactType: container
       artifactName: RayTraceBenchmark-Wasm
 
-- job: linux
-  container: nv-bionic-wasm
+- job: Linux
+  container: unoplatform/wasm-build:2.0
 
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
 
   variables:
-    NUGET_PACKAGES: $(build.sourcesdirectory)/.nuget
-    EMSCRIPTEN_VERSION: 1.38.48-upstream
+    NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget
 
   steps:
-  - checkout: self
-    clean: true
-
   - bash: |
-      cd /emsdk
-      echo Installing emscripten $(EMSCRIPTEN_VERSION)
-      sudo git reset HEAD --hard
-      sudo git pull
-      sudo ./emsdk update-tags
-      sudo ./emsdk install $(EMSCRIPTEN_VERSION)
-      sudo ./emsdk activate $(EMSCRIPTEN_VERSION)
-      sudo chmod -R 777 /emsdk
-      sudo chmod -R 777 ~/.emscripten_cache
-
+      cd ~
+      git clone https://github.com/emscripten-core/emsdk
+      cd emsdk
+      ./emsdk install sdk-1.39.11
+      ./emsdk activate sdk-1.39.11
+    
     displayName: 'Setup Emscripten'
 
-  - bash: |
-      cd /emsdk
-      wget https://raw.githubusercontent.com/mono/mono/master/sdks/builds/emscripten-pr-8457.diff
-      wget https://raw.githubusercontent.com/mono/mono/master/sdks/builds/fix-emscripten-8511.diff
-      cd /emsdk/upstream/emscripten
-      patch -N -p1 < /emsdk/emscripten-pr-8457.diff
-      patch -N -p1 < /emsdk/fix-emscripten-8511.diff
+  - task: UseDotNet@2
+    inputs:
+      packageType: runtime
+      version: 2.2.x
+      installationPath: /usr/share/dotnet
 
-    displayName: 'Apply Emscripten Mono patches'
+  - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries') }}:
+    - template: .vsts-ci.canaries.yml
+      parameters:
+        Solution: $(Build.SourcesDirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm
+        ArtifactName: Canary-AOT
 
-  - task: GitVersion@4
+  - task: GitVersion@5
     inputs:
       updateAssemblyInfo: false
 
-  - script: |
-      source /emsdk/emsdk_env.sh
-      msbuild /r /p:Configuration=Release "/p:InformationalVersion=$GITVERSION_INFORMATIONALVERSION" "$(build.sourcesdirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
+  - task: UseDotNet@2
+    inputs:
+      packageType: sdk
+      version: 3.1.x
+      installationPath: /usr/share/dotnet
 
-    env:
-      GITVERSION_INFORMATIONALVERSION: $(GITVERSION_INFORMATIONALVERSION)
+  - bash: |
+      source ~/emsdk/emsdk_env.sh
+      msbuild /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(build.sourcesdirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/netstandard2.0/dist'
+      SourceFolder: '$(Build.SourcesDirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/netstandard2.0/dist'
       Contents: '**/*.*'
-      TargetFolder: $(build.artifactstagingdirectory)/wasm
+      TargetFolder: $(Build.ArtifactStagingDirectory)/wasm
       CleanTargetFolder: false
       OverWrite: false
       flattenFolders: false
 
   - task: PublishBuildArtifacts@1
-    # https://developercommunity.visualstudio.com/content/problem/284991/public-vsts-previouw-cant-set-build-number-of-pr-b.html
-    condition: eq(variables['System.PullRequest.IsFork'], 'False')
     inputs:
-      PathtoPublish: $(build.artifactstagingdirectory)
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
       ArtifactName: aot-drop
       ArtifactType: Container
