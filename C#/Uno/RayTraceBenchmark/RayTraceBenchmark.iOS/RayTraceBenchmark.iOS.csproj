@@ -102,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Uno.UI">
-      <Version>2.4.0</Version>
+      <Version>3.0.0-dev.135</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="..\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems" Label="Shared" Condition="Exists('..\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems')" />

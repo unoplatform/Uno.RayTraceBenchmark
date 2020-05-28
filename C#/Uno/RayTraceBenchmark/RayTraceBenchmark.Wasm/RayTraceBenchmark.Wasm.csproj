@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -6,14 +6,21 @@
 		<WasmHead>true</WasmHead>
 		<DefineConstants>$(DefineConstants);__WASM__;UWP</DefineConstants>
 		<NoWarn>NU1701</NoWarn>
-    <WasmShellMonoRuntimeExecutionMode Condition="$([MSBuild]::IsOsUnixLike())">FullAOT</WasmShellMonoRuntimeExecutionMode>
-  </PropertyGroup>
+
+		<!--<WasmShellGenerateAOTProfile>true</WasmShellGenerateAOTProfile>-->
+		<UseAOT Condition="$([MSBuild]::IsOsPlatform('Linux')) or ( $([MSBuild]::IsOsPlatform('Windows')) and '$(BUILD_REPOSITORY_PROVIDER)'=='' )">true</UseAOT>
+		<WasmShellMonoRuntimeExecutionMode Condition="'$(UseAOT)'=='true'">InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode>
+	</PropertyGroup>
   
   <ItemGroup>
     <EmbeddedResource Include="RayTraceBenchmark.Wasm.xml">
       <LogicalName>RayTraceBenchmark.Wasm.xml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+	
+	<ItemGroup Condition="'$(UseAOT)'=='true'">
+		<WasmShellEnableAotProfile Include="aot-full.profile" />
+	</ItemGroup>
 	
 	<ItemGroup>
 		<EmbeddedResource Include="WasmCSS\**\*.css" />
@@ -27,12 +34,12 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
-		<PackageReference Include="Uno.UI" Version="2.4.0" />
+		<PackageReference Include="Uno.UI" Version="3.0.0-dev.135" />
 		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.23" />
-		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.2.0" />
-    <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.2.0" />
+		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.3.0-dev.12" />
 		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.8.3" />
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.8.3" />
+		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.3.0-dev.12" />
   </ItemGroup>
 
 	<Import Project="..\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems" Label="Shared" Condition="Exists('..\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems')" />

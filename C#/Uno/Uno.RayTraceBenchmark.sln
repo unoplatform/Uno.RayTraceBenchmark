@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27924.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30021.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "RayTraceBenchmark.Shared", "RayTraceBenchmark\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
 EndProject
@@ -17,6 +17,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		RayTraceBenchmark\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems*{0a836c36-7ae2-4b06-8a3b-73081528bfcd}*SharedItemsImports = 4
 		RayTraceBenchmark\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
+		RayTraceBenchmark\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems*{7db0f56b-25d4-485c-b812-d554acfc4d50}*SharedItemsImports = 5
 		RayTraceBenchmark\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems*{9bb383a6-e067-4906-9d21-34a320ebbfcc}*SharedItemsImports = 4
 		RayTraceBenchmark\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems*{db4d6774-eed9-4830-8dc1-f26cbff33d17}*SharedItemsImports = 4
 	EndGlobalSection
