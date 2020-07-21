@@ -47,15 +47,16 @@ jobs:
 
   variables:
     NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget
+    EMSCRIPTEN_VERSION: 1.39.18
 
   steps:
   - bash: |
       cd ~
-      git clone --branch 1.39.11 https://github.com/emscripten-core/emsdk
+      git clone --branch $(EMSCRIPTEN_VERSION) https://github.com/emscripten-core/emsdk
       cd emsdk
-      ./emsdk install sdk-1.39.11
-      ./emsdk activate sdk-1.39.11
-    
+      ./emsdk install $(EMSCRIPTEN_VERSION)
+      ./emsdk activate $(EMSCRIPTEN_VERSION)
+
     displayName: 'Setup Emscripten'
 
   - task: UseDotNet@2
