@@ -78,7 +78,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: sdk
-      version: 3.1.x
+      version: 3.1.201
       installationPath: /usr/share/dotnet
 
   - bash: |
