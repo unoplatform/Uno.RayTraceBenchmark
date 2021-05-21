@@ -5,7 +5,7 @@ jobs:
     vmImage: windows-2019
 
   variables:
-    Solution: C#\Uno\Uno.RayTraceBenchmark.sln
+    Solution: CSharp\Uno\Uno.RayTraceBenchmark.sln
     NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
 
   steps:
@@ -35,7 +35,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: 'C#\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\netstandard2.0\dist'
+      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\netstandard2.0\dist'
       artifactType: container
       artifactName: RayTraceBenchmark-Wasm
 
@@ -68,7 +68,7 @@ jobs:
   - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries') }}:
     - template: .vsts-ci.canaries.yml
       parameters:
-        Solution: $(Build.SourcesDirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm
+        Solution: $(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm
         ArtifactName: Canary-AOT
 
   - task: GitVersion@5
@@ -83,12 +83,12 @@ jobs:
 
   - bash: |
       source ~/emsdk/emsdk_env.sh
-      msbuild /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
+      msbuild /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/C#/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/netstandard2.0/dist'
+      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/netstandard2.0/dist'
       Contents: '**/*.*'
       TargetFolder: $(Build.ArtifactStagingDirectory)/wasm
       CleanTargetFolder: false
