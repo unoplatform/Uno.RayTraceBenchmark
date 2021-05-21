@@ -40,30 +40,26 @@ jobs:
       artifactName: RayTraceBenchmark-Wasm
 
 - job: Linux
-  container: unoplatform/wasm-build:2.0
+  container: unoplatform/wasm-build:3.0
 
   pool:
     vmImage: 'ubuntu-18.04'
 
   variables:
     NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget
-    EMSCRIPTEN_VERSION: 1.39.18
 
   steps:
-  - bash: |
-      cd ~
-      git clone --branch $(EMSCRIPTEN_VERSION) https://github.com/emscripten-core/emsdk
-      cd emsdk
-      ./emsdk install $(EMSCRIPTEN_VERSION)
-      ./emsdk activate $(EMSCRIPTEN_VERSION)
-
-    displayName: 'Setup Emscripten'
-
   - task: UseDotNet@2
+    displayName: 'Use .Net Core runtime 5.0.3'
     inputs:
       packageType: runtime
-      version: 2.2.x
-      installationPath: /usr/share/dotnet
+      version: 5.0.3
+
+  - task: UseDotNet@2
+    displayName: 'Use .Net Core runtime 3.1.12'
+    inputs:
+      packageType: runtime
+      version: 3.1.12
 
   - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries') }}:
     - template: .vsts-ci.canaries.yml
@@ -71,19 +67,24 @@ jobs:
         Solution: $(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm
         ArtifactName: Canary-AOT
 
-  - task: GitVersion@5
+  - task: gitversion/setup@0
     inputs:
-      updateAssemblyInfo: false
+      versionSpec: '5.6.8'
+
+  - task: gitversion/execute@0
+    inputs:
+      updateAssemblyInfo: 'False'
+      useConfigFile: true
+      configFilePath: gitversion.yml
+    displayName: Use GitVersion
 
   - task: UseDotNet@2
     inputs:
       packageType: sdk
-      version: 3.1.201
-      installationPath: /usr/share/dotnet
+      version: 5.0.203
 
   - bash: |
-      source ~/emsdk/emsdk_env.sh
-      msbuild /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
+      dotnet build /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
