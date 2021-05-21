@@ -1,6 +1,5 @@
 ﻿<linker>
 	<assembly fullname="RayTraceBenchmark.Wasm" />
-	<assembly fullname="WebAssembly.Bindings" />
 
 	<assembly fullname="Uno.UI">
 		<type fullname="Windows.UI.Xaml.Window" />
