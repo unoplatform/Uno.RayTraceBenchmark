@@ -10,7 +10,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'runtime'
-    version: '2.2.0'
+    version: '2.2.x'
 
 - task: nventiveCanaryUpdater@5
   inputs:
@@ -19,7 +19,7 @@ steps:
     useNuGetOrg: true
     mergeBranch: true
     branchToMerge: 'master'
-    nugetUpdaterVersion: '2.1.1'
+    nugetUpdaterVersion: '2.0.6'
     allowDowngrade: true
     packageAuthor: 'nventive'
     summaryFile: '$(Build.ArtifactStagingDirectory)/Summary.md'
