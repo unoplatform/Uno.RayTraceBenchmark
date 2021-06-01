@@ -43,17 +43,13 @@ jobs:
   container: unoplatform/wasm-build:3.0
 
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-latest'
 
   variables:
     NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget
+    Solution: 
 
   steps:
-  - task: UseDotNet@2
-    displayName: 'Use .Net Core runtime 5.0.3'
-    inputs:
-      packageType: runtime
-      version: 5.0.3
 
   - task: UseDotNet@2
     displayName: 'Use .Net Core runtime 3.1.12'
@@ -64,8 +60,14 @@ jobs:
   - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries') }}:
     - template: .vsts-ci.canaries.yml
       parameters:
-        Solution: $(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm
+        Solution: $(Build.SourcesDirectory)/CSharp/Uno/Uno.RayTraceBenchmark.sln
         ArtifactName: Canary-AOT
+
+  - task: UseDotNet@2
+    displayName: 'Use .Net Core runtime 5.0.3'
+    inputs:
+      packageType: runtime
+      version: 5.0.3
 
   - task: gitversion/setup@0
     inputs:
