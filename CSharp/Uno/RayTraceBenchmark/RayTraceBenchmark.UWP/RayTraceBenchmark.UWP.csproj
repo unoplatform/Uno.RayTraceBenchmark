@@ -8,6 +8,9 @@
     <PackageReference Include="System.Console">
       <Version>4.3.1</Version>
     </PackageReference>
+    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging">
+      <Version>4.0.0-dev.5594</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
