@@ -9,7 +9,7 @@
       <Version>4.3.1</Version>
     </PackageReference>
     <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging">
-      <Version>4.0.0-dev.5594</Version>
+      <Version>4.1.0-dev.108</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>
