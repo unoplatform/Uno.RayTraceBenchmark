@@ -19,6 +19,11 @@ jobs:
     inputs:
       updateAssemblyInfo: false   
 
+  - pwsh: |
+      echo "##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_11_X64)"
+      echo "##vso[task.setvariable variable=JavaSdkDirectory]$(JAVA_HOME_11_X64)"
+    displayName: Select JDK 11
+
   - task: MSBuild@1
     inputs:
       solution: $(Solution)
