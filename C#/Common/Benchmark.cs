@@ -9,8 +9,9 @@ using System.Runtime.CompilerServices;
 #if !JSIL
 using System.Threading;
 using System.Threading.Tasks;
-#endif
+using System.Reflection.Metadata;
 
+#endif
 #if BIT64
 using Num = System.Double;
 #else
@@ -201,8 +202,8 @@ namespace RayTraceBenchmark
 
 	static class Benchmark
 	{
-		public const int Width = 1280;
-		public const int Height = 720;
+		public const int Width = 320;
+		public const int Height = 200;
 		private const Num fov = 45;
 		private const int maxDepth = 6;
 		private const Num PI = (Num)Math.PI;
@@ -416,10 +417,10 @@ namespace RayTraceBenchmark
 		public delegate void SaveImageCallbackMethod(byte[] data);
 		public static SaveImageCallbackMethod SaveImageCallback;
 		#else
-		static void Main(string[] args)
-		{
-			Start();
-		}
+		//static void Main(string[] args)
+		//{
+		//	Start();
+		//}
 		#endif
 
 		#if JSIL
@@ -448,10 +449,10 @@ namespace RayTraceBenchmark
 			#if !JSIL
 			GC.Collect();
 			Console.WriteLine("Give the system a little time...");
-			await Task.Delay(2000);
+			//await Task.Delay(2000);
 			#endif
 			Console.WriteLine("Starting test...");
-			await Task.Yield();
+			//await Task.Yield();
 
 			// run test
 			#if WIN32
@@ -486,9 +487,13 @@ namespace RayTraceBenchmark
 			#endif
 		}
 
-		public static byte[] ConvertRGBToBGRA(byte[] rgb)
+		public static void ConvertRGBToBGRA(byte[] rgb, byte[] rgba)
 		{
-			var rgba = new byte[(rgb.Length/3) * 4];
+            if (rgb.Length != rgba.Length / 4 * 3)
+            {
+                throw new ArgumentException("incorrect output lenfet");
+            }
+
 			for (int i = 0, i2 = 0; i != rgb.Length; i += 3, i2 += 4)
 			{
 				rgba[i2] = rgb[i+2];
@@ -496,8 +501,6 @@ namespace RayTraceBenchmark
 				rgba[i2+2] = rgb[i];
 				rgba[i2+3] = 255;
 			}
-
-			return rgba;
 		}
 
 		public static int[] ConvertRGBToBGRAInt(byte[] rgb)
@@ -515,4 +518,53 @@ namespace RayTraceBenchmark
 			return rgba;
 		}
 	}
+
+	public class Benchmark2
+    {
+        private Scene _scene;
+        public byte[] Pixels { get; }
+        private Stopwatch _watch = Stopwatch.StartNew();
+
+        public Benchmark2()
+        {
+            // create objects
+            _scene = new Scene();
+
+            _scene.Objects = new Sphere[]
+            {
+                new Sphere(new Vec3(0.0f, -10002.0f, -20.0f), 10000, new Vec3(.8f, .8f, .8f)),
+                new Sphere(new Vec3(0.0f, 2.0f, -20.0f), 4, new Vec3(.8f, .5f, .5f), 0.5f),
+                new Sphere(new Vec3(5.0f, 0.0f, -15.0f), 2, new Vec3(.3f, .8f, .8f), 0.2f),
+                new Sphere(new Vec3(-5.0f, 0.0f, -15.0f), 2, new Vec3(.3f, .5f, .8f), 0.2f),
+                new Sphere(new Vec3(-2.0f, -1.0f, -10.0f), 1, new Vec3(.1f, .1f, .1f), 0.1f, 0.8f)
+            };
+
+            _scene.Lights = new Light[] { 
+				new Light(
+					new Vec3(-10, 20, 30), 
+					new Vec3(2, 2, 2)
+				)
+			};
+
+            int pixelsLength = Benchmark.Width * Benchmark.Height * 3;
+            Pixels = new byte[pixelsLength];
+        }
+
+		public void Render()
+        {
+			var angle = DegToRad((float)(_watch.Elapsed.TotalSeconds * 66) % 360);
+			var x = (float)(Math.Sin(angle) * 10);
+			var y = (float)(Math.Cos(angle) * 30);
+
+            _scene.Lights[0].Position = new Vec3(x, 20, y);
+
+            Benchmark.Render(_scene, Pixels);
+        }
+
+        // convert degree to radians
+        public static float DegToRad(float angle)
+		{
+            return (float)((Math.PI / 180.0f) * angle);
+        }
+    }
 }

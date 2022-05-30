@@ -2,24 +2,33 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<NoWarn>NU1701</NoWarn>
 		<DefineConstants>$(DefineConstants);UWP</DefineConstants>
 		<!--<WasmShellGenerateAOTProfile>true</WasmShellGenerateAOTProfile>-->
-		<UseAOT Condition="$([MSBuild]::IsOsPlatform('Linux')) or ( $([MSBuild]::IsOsPlatform('Windows')) and '$(BUILD_REPOSITORY_PROVIDER)'=='' )">true</UseAOT>
+		<!--<UseAOT>true</UseAOT>-->
 		<WasmShellMonoRuntimeExecutionMode Condition="'$(UseAOT)'=='true'">InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode>
+		<WasmShellEnableEmccProfiling>true</WasmShellEnableEmccProfiling>
+
+		<WasmShellEnableThreads>true</WasmShellEnableThreads>
+		<!--<WasmShellEnableSimd>true</WasmShellEnableSimd>-->
+		<WasmShellIncludeWindowsCompatibility>false</WasmShellIncludeWindowsCompatibility>
+
+		<WasmShellPThreadsPoolSize>16</WasmShellPThreadsPoolSize>
 	</PropertyGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="RayTraceBenchmark.Wasm.xml">
-      <LogicalName>RayTraceBenchmark.Wasm.xml</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-	
-	<ItemGroup Condition="'$(UseAOT)'=='true'">
-		<WasmShellEnableAotProfile Include="aot-full.profile" />
+
+	<ItemGroup>
+		<EmbeddedResource Include="RayTraceBenchmark.Wasm.xml">
+			<LogicalName>RayTraceBenchmark.Wasm.xml</LogicalName>
+		</EmbeddedResource>
+		
+		<WasmShellExtraEmccFlags Include="-sPTHREAD_POOL_SIZE=10" />
 	</ItemGroup>
-	
+
+	<ItemGroup Condition="'$(UseAOT)'=='true'">
+		<WasmShellEnableAotProfile Include="aot-net7.profile" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<EmbeddedResource Include="WasmCSS\**\*.css" />
 		<EmbeddedResource Include="WasmScripts\**\*.js" />
@@ -32,15 +41,17 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
-		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.1.0-dev.108" />
-		<PackageReference Include="Uno.UI.WebAssembly" Version="4.1.0-dev.108" />
-		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.37" />
-		<PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.1" />
-		<PackageReference Include="Uno.Wasm.Bootstrap" Version="3.2.0-dev.3" />
+		<PackageReference Include="Uno.Microsoft.Toolkit.Uwp.UI.Controls" Version="7.1.11" />
+		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.7.0-dev.109" />
+		<PackageReference Include="Uno.Extensions.Logging.WebAssembly.Console" Version="1.4.0" />
+		<PackageReference Include="Uno.UI.WebAssembly" Version="4.7.0-dev.109" />
+		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.45" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.0" />
+		<PackageReference Include="Uno.Wasm.Bootstrap" Version="8.0.0-dev.19" />
 		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.8.3" />
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.8.3" />
-		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="3.2.0-dev.3" />
-  </ItemGroup>
+		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.6" />
+	</ItemGroup>
 
 	<Import Project="..\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems" Label="Shared" Condition="Exists('..\RayTraceBenchmark.Shared\RayTraceBenchmark.Shared.projitems')" />
 
