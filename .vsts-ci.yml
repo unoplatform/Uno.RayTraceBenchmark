@@ -59,7 +59,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\net5.0\dist'
+      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\net7.0\dist'
       artifactType: container
       artifactName: RayTraceBenchmark-Wasm
 
@@ -125,7 +125,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/net5.0/dist'
+      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/net7.0/dist'
       Contents: '**/*.*'
       TargetFolder: $(Build.ArtifactStagingDirectory)/wasm
       CleanTargetFolder: false
