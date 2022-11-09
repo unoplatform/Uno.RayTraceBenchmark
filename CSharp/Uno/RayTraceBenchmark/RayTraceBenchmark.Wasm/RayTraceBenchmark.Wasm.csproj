@@ -6,7 +6,7 @@
 		<NoWarn>NU1701</NoWarn>
 		<DefineConstants>$(DefineConstants);UWP</DefineConstants>
 		<!--<WasmShellGenerateAOTProfile>true</WasmShellGenerateAOTProfile>-->
-		<!--<UseAOT>true</UseAOT>-->
+		<UseAOT Condition="'$(Configuration)'=='Release'">true</UseAOT>
 		<WasmShellMonoRuntimeExecutionMode Condition="'$(UseAOT)'=='true'">InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode>
 		<WasmShellEnableEmccProfiling>true</WasmShellEnableEmccProfiling>
 
@@ -21,8 +21,6 @@
 		<EmbeddedResource Include="RayTraceBenchmark.Wasm.xml">
 			<LogicalName>RayTraceBenchmark.Wasm.xml</LogicalName>
 		</EmbeddedResource>
-		
-		<WasmShellExtraEmccFlags Include="-sPTHREAD_POOL_SIZE=10" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(UseAOT)'=='true'">
