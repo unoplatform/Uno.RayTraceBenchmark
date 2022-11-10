@@ -72,7 +72,10 @@ namespace RayTraceBenchmark
 
                         var elapsed = sw.Elapsed;
 
-                        BenchmarkMain.ConvertRGBToBGRA(bench.Pixels, rgbaBuffer);
+                        lock (_pixelGate)
+                        {
+                            BenchmarkMain.ConvertRGBToBGRA(bench.Pixels, rgbaBuffer);
+                        }
 
                         _ = Dispatcher.RunAsync(
                             CoreDispatcherPriority.Normal,

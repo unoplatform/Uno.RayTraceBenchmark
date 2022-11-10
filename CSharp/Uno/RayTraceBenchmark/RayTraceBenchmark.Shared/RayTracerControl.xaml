@@ -12,9 +12,11 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="info" />
-        <Image Name="image"
-               Stretch="UniformToFill"
-               Grid.Row="1" />
+        <TextBlock x:Name="info" Text="Initializing..." />
+        <Border Background="LightGray" Grid.Row="1">
+            <Image Name="image"
+                   Stretch="UniformToFill"
+                    />
+        </Border>
     </Grid>
 </UserControl>

@@ -15,6 +15,7 @@
         LinkToUnoPlatformApp="https://github.com/nventive/Uno.RayTraceBenchmark"
         LinkToOriginalApp="https://github.com/zezba9000/RayTraceBenchmark"
         AppName="Raytracer Benchmark"
+        AboutContent="This app uses WebAssembly threads to render the images, using .NET 7 experimental support."
         AppAuthor="Uno Platform">
 
         <Grid Grid.Row="1">
