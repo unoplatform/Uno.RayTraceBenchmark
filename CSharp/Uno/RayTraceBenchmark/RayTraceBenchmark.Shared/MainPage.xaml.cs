@@ -47,7 +47,7 @@ namespace RayTraceBenchmark
             {
                 for (int i = 0; i < newCount - oldCount; i++)
                 {
-                    Renderers.Add(new RayTracerControl() { Width = Benchmark.Width / 2, Height = Benchmark.Height / 2 });
+                    Renderers.Add(new RayTracerControl() { Width = Benchmark.Width, Height = Benchmark.Height });
                 }
             }
         }
