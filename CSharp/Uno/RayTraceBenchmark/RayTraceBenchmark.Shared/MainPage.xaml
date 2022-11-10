@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Margin="12">
-                <Slider Header="Number of Ray Tracers"
+                <Slider Header="Number of Ray Tracers Threads"
                         Value="{x:Bind RenderersCount, Mode=TwoWay}" />
             </StackPanel>
 
