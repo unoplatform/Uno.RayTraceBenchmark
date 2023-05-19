@@ -23,7 +23,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '7.0.300'
+      version: '7.0.202'
 
   - task: gitversion/setup@0
     retryCountOnTaskFailure: 3
