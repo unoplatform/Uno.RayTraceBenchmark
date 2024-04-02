@@ -39,7 +39,7 @@ jobs:
     displayName: Select JDK 11
 
   - pwsh: |
-      dotnet build -f net8.0-android -c Release "-p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj"
+      dotnet build -f net8.0-android -c Release "-p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj" /bl:$(Build.SourcesDirectory)\build\wasm-aot.binlog
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
@@ -47,6 +47,14 @@ jobs:
       pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\net7.0\dist'
       artifactType: container
       artifactName: RayTraceBenchmark-Wasm
+
+  - task: PublishBuildArtifacts@1
+    condition: always()
+    displayName: Publish Logs Artifacts
+    inputs:
+      pathToPublish: $(Build.SourcesDirectory)/build
+      artifactType: container
+      artifactName: Logs
 
 - job: Linux
   container: unoplatform/wasm-build:3.0
@@ -94,7 +102,7 @@ jobs:
       version: 5.0.203
 
   - bash: |
-      dotnet build -f net8.0-browserwasm -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/Uno.RayTraceBenchmark.csproj"
+      dotnet build -f net8.0-browserwasm -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/Uno.RayTraceBenchmark.csproj" /bl:$(Build.SourcesDirectory)/build/wasm-aot.binlog
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
@@ -105,6 +113,14 @@ jobs:
       CleanTargetFolder: false
       OverWrite: false
       flattenFolders: false
+
+  - task: PublishBuildArtifacts@1
+    condition: always()
+    displayName: Publish Logs Artifacts
+    inputs:
+      pathToPublish: $(Build.SourcesDirectory)/build
+      artifactType: container
+      artifactName: Logs
 
   - task: PublishBuildArtifacts@1
     inputs:
