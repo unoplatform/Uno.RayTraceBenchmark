@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "uno52test02",
+  "display": "standalone",
+  "name": "uno52test02",
+  "short_name": "uno52test02",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

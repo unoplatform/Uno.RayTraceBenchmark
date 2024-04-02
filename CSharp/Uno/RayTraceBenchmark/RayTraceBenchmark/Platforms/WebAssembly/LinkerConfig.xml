@@ -1,0 +1,8 @@
+<linker>
+	<assembly fullname="RayTraceBenchmark" />
+
+	<assembly fullname="Uno.UI">
+		<type fullname="Microsoft.UI.Xaml.Window" />
+		<type fullname="Microsoft.UI.Xaml.UIElement" />
+	</assembly>
+</linker>
