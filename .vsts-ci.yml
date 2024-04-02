@@ -39,7 +39,7 @@ jobs:
     displayName: Select JDK 11
 
   - bash: |
-      dotnet build -f net8.0-android -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/RayTraceBenchmark.csproj"
+      dotnet build -f net8.0-android -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/Uno.RayTraceBenchmark.csproj"
   
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
@@ -94,12 +94,12 @@ jobs:
       version: 5.0.203
 
   - bash: |
-      dotnet build -f net8.0-browserwasm -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/RayTraceBenchmark.csproj"
+      dotnet build -f net8.0-browserwasm -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/Uno.RayTraceBenchmark.csproj"
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/net7.0/dist'
+      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/net8.0/dist'
       Contents: '**/*.*'
       TargetFolder: $(Build.ArtifactStagingDirectory)/wasm
       CleanTargetFolder: false
