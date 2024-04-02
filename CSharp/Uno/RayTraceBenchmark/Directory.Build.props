@@ -19,5 +19,6 @@
 		<UnoThemesVersion>4.2.0-dev.19</UnoThemesVersion>
 		<UnoCSharpMarkupVersion>5.2.0-dev.58</UnoCSharpMarkupVersion>
 		<UnoWasmBootstrapVersion>8.0.13</UnoWasmBootstrapVersion>
+		<UnoResizetizerVersion>1.4.0-dev.45</UnoResizetizerVersion>
 	</PropertyGroup>
 </Project>
