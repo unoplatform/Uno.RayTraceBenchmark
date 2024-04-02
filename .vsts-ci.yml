@@ -52,7 +52,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
     inputs:
-      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\net7.0\dist'
+      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\bin\Release\net8.0-browserwasm\dist'
       artifactType: container
       artifactName: RayTraceBenchmark-Wasm
 
