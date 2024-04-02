@@ -38,6 +38,14 @@ jobs:
       echo "##vso[task.setvariable variable=JavaSdkDirectory]$(JAVA_HOME_11_X64)"
     displayName: Select JDK 11
 
+  - powershell: |
+      & dotnet tool update --global uno.check --version 1.20.2 --add-source https://api.nuget.org/v3/index.json
+      & uno-check -v --ci --non-interactive --fix --skip androidsdk --skip androidemulator --skip xcode --skip gtk3 --skip vswin --skip vsmac
+    displayName: Install .NET Workloads
+    errorActionPreference: continue
+    ignoreLASTEXITCODE: true
+    retryCountOnTaskFailure: 3
+
   - pwsh: |
       dotnet build -f net8.0-android -c Release "-p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj" /bl:$(Build.SourcesDirectory)\build\wasm-aot.binlog
 
@@ -107,7 +115,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/net8.0/dist'
+      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/bin/Release/net8.0-browserwasm/dist'
       Contents: '**/*.*'
       TargetFolder: $(Build.ArtifactStagingDirectory)/wasm
       CleanTargetFolder: false
