@@ -39,7 +39,7 @@ jobs:
     displayName: Select JDK 11
 
   - bash: |
-      dotnet build -f net8.0-android -v Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/RayTraceBenchmark.csproj"
+      dotnet build -f net8.0-android -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/RayTraceBenchmark.csproj"
   
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
