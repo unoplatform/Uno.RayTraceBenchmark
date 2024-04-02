@@ -94,7 +94,7 @@ jobs:
       version: 5.0.203
 
   - bash: |
-      dotnet build -f net8.0-browserwasm -v Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/RayTraceBenchmark.csproj"
+      dotnet build -f net8.0-browserwasm -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/RayTraceBenchmark.csproj"
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
