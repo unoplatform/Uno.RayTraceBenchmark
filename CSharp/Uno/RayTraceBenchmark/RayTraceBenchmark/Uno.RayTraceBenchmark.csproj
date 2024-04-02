@@ -58,7 +58,7 @@
 			</PropertyGroup>
 
 			<ItemGroup Condition="'$(UseAOT)'=='true'">
-				<WasmShellEnableAotProfile Include="aot-net7.profile" />
+				<WasmShellEnableAotProfile Include="Platforms\WebAssembly\aot-net7.profile" />
 			</ItemGroup>
 			
 			<ItemGroup>
