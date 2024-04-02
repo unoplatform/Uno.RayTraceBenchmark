@@ -49,12 +49,6 @@ jobs:
   - pwsh: |
       dotnet build -f net8.0-android -c Release "-p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj" /bl:$(Build.SourcesDirectory)\build\wasm-aot.binlog
 
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Package Artifacts
-    inputs:
-      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\bin\Release\net8.0-browserwasm\dist'
-      artifactType: container
-      artifactName: RayTraceBenchmark-Wasm
 
   - task: PublishBuildArtifacts@1
     condition: always()
