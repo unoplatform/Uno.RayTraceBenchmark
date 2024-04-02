@@ -38,8 +38,8 @@ jobs:
       echo "##vso[task.setvariable variable=JavaSdkDirectory]$(JAVA_HOME_11_X64)"
     displayName: Select JDK 11
 
-  - bash: |
-      dotnet build -f net8.0-android -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj"
+  - pwsh: |
+      dotnet build -f net8.0-android -c Release "-p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj"
 
   - task: PublishBuildArtifacts@1
     displayName: Publish Package Artifacts
