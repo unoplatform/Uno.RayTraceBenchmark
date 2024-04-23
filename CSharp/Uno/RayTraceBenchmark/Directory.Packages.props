@@ -1,0 +1,17 @@
+<Project ToolsVersion="15.0">
+	<!--
+    Note that the $(UnoVersion) comes from the Uno.Sdk. You should not update it manually. To update the version of Uno,
+    you should instead update the Sdk version in the global.json file.
+
+    See https://aka.platform.uno/upgrade-uno-packages for more information.
+  -->
+	<ItemGroup>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageVersion Include="Uno.CommunityToolkit.WinUI.UI.Controls" Version="7.1.200" />
+		<PackageVersion Include="Uno.WinUI.Sample.Banner" Version="1.45.0-dev.64" />
+		<PackageVersion Include="Microsoft.TypeScript.Compiler" Version="3.1.5" />
+		<PackageVersion Include="Microsoft.TypeScript.MSBuild" Version="4.6.4" />
+	</ItemGroup>
+</Project>

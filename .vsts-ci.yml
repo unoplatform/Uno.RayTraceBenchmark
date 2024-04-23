@@ -18,12 +18,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '5.0.x'
-
-  - task: UseDotNet@2
-    inputs:
-      packageType: 'sdk'
-      version: '7.0.202'
+      version: '8.0.203'
 
   - task: gitversion/setup@0
     retryCountOnTaskFailure: 3
@@ -43,25 +38,25 @@ jobs:
       echo "##vso[task.setvariable variable=JavaSdkDirectory]$(JAVA_HOME_11_X64)"
     displayName: Select JDK 11
 
-  - task: MSBuild@1
-    inputs:
-      solution: $(Solution)
-      msbuildLocationMethod: version
-      msbuildVersion: latest
-      msbuildArchitecture: x86
-      msbuildArguments: /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" /detailedsummary
-      clean: false
-      maximumCpuCount: true
-      restoreNugetPackages: false
-      logProjectEvents: false
-      createLogFile: false
-  
+  - powershell: |
+      & dotnet tool update --global uno.check --version 1.20.2 --add-source https://api.nuget.org/v3/index.json
+      & uno-check -v --ci --non-interactive --fix --skip androidsdk --skip androidemulator --skip xcode --skip gtk3 --skip vswin --skip vsmac
+    displayName: Install .NET Workloads
+    errorActionPreference: continue
+    ignoreLASTEXITCODE: true
+    retryCountOnTaskFailure: 3
+
+  - pwsh: |
+      dotnet build -f net8.0-android -c Release "-p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)\CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark\Uno.RayTraceBenchmark.csproj" /bl:$(Build.SourcesDirectory)\build\wasm-aot.binlog
+
+
   - task: PublishBuildArtifacts@1
-    displayName: Publish Package Artifacts
+    condition: always()
+    displayName: Publish Logs Artifacts
     inputs:
-      pathToPublish: 'CSharp\Uno\RayTraceBenchmark\RayTraceBenchmark.Wasm\bin\Release\net7.0\dist'
+      pathToPublish: $(Build.SourcesDirectory)/build
       artifactType: container
-      artifactName: RayTraceBenchmark-Wasm
+      artifactName: Logs
 
 - job: Linux
   container: unoplatform/wasm-build:3.0
@@ -76,20 +71,9 @@ jobs:
   steps:
 
   - task: UseDotNet@2
-    displayName: 'Use .Net Core runtime 3.1.12'
-    inputs:
-      packageType: runtime
-      version: 3.1.12
-
-  - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '5.0.x'
-
-  - task: UseDotNet@2
-    inputs:
-      packageType: 'sdk'
-      version: '7.0.x'
+      version: '8.0.203'
 
   - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/canaries') }}:
     - template: .vsts-ci.canaries.yml
@@ -120,17 +104,25 @@ jobs:
       version: 5.0.203
 
   - bash: |
-      dotnet build /r /p:Configuration=Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/RayTraceBenchmark.Wasm.csproj"
+      dotnet build -f net8.0-browserwasm -c Release "/p:InformationalVersion=$(GitVersion.InformationalVersion)" "$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/Uno.RayTraceBenchmark.csproj" /bl:$(Build.SourcesDirectory)/build/wasm-aot.binlog
 
   - task: CopyFiles@2
     displayName: 'Publish Wasm Binaries'
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark.Wasm/bin/Release/net7.0/dist'
+      SourceFolder: '$(Build.SourcesDirectory)/CSharp/Uno/RayTraceBenchmark/RayTraceBenchmark/bin/Release/net8.0-browserwasm/dist'
       Contents: '**/*.*'
       TargetFolder: $(Build.ArtifactStagingDirectory)/wasm
       CleanTargetFolder: false
       OverWrite: false
       flattenFolders: false
+
+  - task: PublishBuildArtifacts@1
+    condition: always()
+    displayName: Publish Logs Artifacts
+    inputs:
+      pathToPublish: $(Build.SourcesDirectory)/build
+      artifactType: container
+      artifactName: Logs
 
   - task: PublishBuildArtifacts@1
     inputs:
