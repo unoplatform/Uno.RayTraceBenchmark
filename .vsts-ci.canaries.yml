@@ -10,7 +10,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'runtime'
-    version: '2.2.x'
+    version: '8.0.301'
 
 - task: unoplatformCanaryUpdater@1
   inputs:
