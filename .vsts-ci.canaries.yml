@@ -12,14 +12,14 @@ steps:
     packageType: 'runtime'
     version: '2.2.x'
 
-- task: nventiveCanaryUpdater@5
+- task: noplatformCanaryUpdater@1
   inputs:
     solution: ${{ parameters['Solution'] }}
     usePrivateFeed: false
     useNuGetOrg: true
     mergeBranch: true
     branchToMerge: 'master'
-    nugetUpdaterVersion: '2.0.6'
+    nugetUpdaterVersion: '1.1.0'
     allowDowngrade: true
     packageAuthor: 'nventive'
     summaryFile: '$(Build.ArtifactStagingDirectory)/Summary.md'
