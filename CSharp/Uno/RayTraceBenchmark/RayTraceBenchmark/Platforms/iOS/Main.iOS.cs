@@ -1,6 +1,6 @@
 using UIKit;
 
-namespace uno52test02.iOS;
+namespace RayTraceBenchmark;
 
 public class EntryPoint
 {

@@ -62,8 +62,7 @@
 			</ItemGroup>
 			
 			<ItemGroup>
-				<TypeScriptCompile Include="Platforms\WebAssembly\ts\GoogleAnalytics.ts" />
-				<EmbeddedResource Include="Platforms\WebAssembly\WasmScripts\**\*.js" />
+				<TypeScriptCompile Remove="Platforms\WebAssembly\WasmScripts\**\*.ts" />
 			</ItemGroup>
 			
 			<ItemGroup>
