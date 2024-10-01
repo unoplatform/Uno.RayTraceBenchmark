@@ -1,14 +1,14 @@
-﻿<Project Sdk="Uno.Sdk">
+﻿<Project Sdk="Uno.Sdk.Private">
 	<PropertyGroup>
 		<TargetFrameworks>
-			net8.0-desktop;
-			net8.0-ios;
-			net8.0-maccatalyst;
-			net8.0-windows10.0.19041;
-			net8.0-browserwasm;
+			<!--net9.0-desktop;
+			net9.0-ios;
+			net9.0-maccatalyst;
+			net9.0-windows10.0.19041;-->
+			net9.0-browserwasm;
 		</TargetFrameworks>
 
-		<TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">$(TargetFrameworks);net8.0-android;</TargetFrameworks>
+		<TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">$(TargetFrameworks);net9.0-android;</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<UnoSingleProject>true</UnoSingleProject>
@@ -39,10 +39,11 @@
 		<UnoFeatures>
 		</UnoFeatures>
 
+		<DisableBuildCompression>true</DisableBuildCompression>
 	</PropertyGroup>
 
 	<Choose>
-		<When Condition="'$(TargetFramework)'=='net8.0-browserwasm'">
+		<When Condition="'$(TargetFramework)'=='net9.0-browserwasm'">
 			
 			<PropertyGroup>
 		
@@ -66,6 +67,8 @@
 			</ItemGroup>
 			
 			<ItemGroup>
+				<PackageReference Include="Uno.Wasm.Bootstrap" />
+				<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" />
 				<PackageReference Include="Microsoft.TypeScript.Compiler">
 					<PrivateAssets>all</PrivateAssets>
 					<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

@@ -11,9 +11,13 @@ namespace RayTraceBenchmark.Wasm
 
 		static void Main(string[] args)
 		{
-            WebAssemblyRuntime.InvokeJS("Uno.UI.Demo.Analytics.reportPageView('main');");
+            var r = Environment.GetEnvironmentVariable("UNO_BOOTSTRAP_MONO_RUNTIME_FEATURES")?.Split(',');
+            var r2 = r?.Contains("threads", StringComparer.OrdinalIgnoreCase) ?? false;
 
-			App.InitializeLogging();
+            Console.WriteLine($"Main: r.Length:{r.Length} r2:{r2} r3:[{r[0]}] UNO_BOOTSTRAP_MONO_RUNTIME_FEATURES:{Environment.GetEnvironmentVariable("UNO_BOOTSTRAP_MONO_RUNTIME_FEATURES")}");
+            // WebAssemblyRuntime.InvokeJS("Uno.UI.Demo.Analytics.reportPageView('main');");
+
+            App.InitializeLogging();
 
             Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
 		}

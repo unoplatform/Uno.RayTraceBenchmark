@@ -13,5 +13,7 @@
 		<PackageVersion Include="Uno.WinUI.Sample.Banner" Version="1.45.0-dev.64" />
 		<PackageVersion Include="Microsoft.TypeScript.Compiler" Version="3.1.5" />
 		<PackageVersion Include="Microsoft.TypeScript.MSBuild" Version="4.6.4" />
+		<PackageVersion Include="Uno.Wasm.Bootstrap" Version="0.2.0-PullRequest0899.1799" />
+		<PackageVersion Include="Uno.Wasm.Bootstrap.DevServer" Version="0.2.0-PullRequest0899.1799" />
 	</ItemGroup>
 </Project>

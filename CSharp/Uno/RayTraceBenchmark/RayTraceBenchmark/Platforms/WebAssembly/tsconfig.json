@@ -10,7 +10,7 @@
     "target": "es6"
   },
   "include": [
-    "ts/**/*",
+    "Platforms/WebAssembly/ts/**/*",
     "tsBindings/**/*"
   ]
 }

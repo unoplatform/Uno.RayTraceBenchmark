@@ -31,6 +31,8 @@ namespace RayTraceBenchmark
 		/// </summary>
 		public App()
 		{
+            Console.WriteLine("Application.Initialize");
+
 			this.InitializeComponent();
 		}
 
@@ -120,7 +122,7 @@ namespace RayTraceBenchmark
 
             var factory = LoggerFactory.Create(builder =>
             {
-#if __WASM__
+#if false //__WASM__
                 builder.AddProvider(new global::Uno.Extensions.Logging.WebAssembly.WebAssemblyConsoleLoggerProvider());
 #elif __IOS__
                 builder.AddProvider(new global::Uno.Extensions.Logging.OSLogLoggerProvider());
@@ -131,12 +133,14 @@ namespace RayTraceBenchmark
 #endif
 
                 // Exclude logs below this level
-                builder.SetMinimumLevel(LogLevel.Information);
+                builder.SetMinimumLevel(LogLevel.Trace);
 
                 // Default filters for Uno Platform namespaces
-                builder.AddFilter("Uno", LogLevel.Warning);
-                builder.AddFilter("Windows", LogLevel.Warning);
-                builder.AddFilter("Microsoft", LogLevel.Warning);
+                builder.AddFilter("Uno", LogLevel.Information);
+                builder.AddFilter("Windows", LogLevel.Information);
+                builder.AddFilter("Microsoft", LogLevel.Information);
+                // builder.AddFilter("Uno.UI.Dispatching", LogLevel.Trace);
+                builder.AddFilter("Uno.UI.Runtime.BrowserPointerInputSource", LogLevel.Trace);
 
                 // Generic Xaml events
                 // builder.AddFilter("Microsoft.UI.Xaml", LogLevel.Debug );
